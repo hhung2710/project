@@ -64,7 +64,7 @@ exports.deleteUser = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
     const result = await user.destroy();
-    res.status(200).send("Complete!");
+    res.status(200).send("Delete!");
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;

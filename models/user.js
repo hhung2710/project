@@ -24,7 +24,7 @@ const User = sequelize.define(
     deletedAt: "deteledAT",
     paranoid: true,
     timestamps: true,
-  }
+  } 
 );
 
 module.exports = User;
