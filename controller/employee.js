@@ -14,21 +14,17 @@ exports.getAllUser = async (req, res, next) => {
 
 exports.postNewUser = async (req, res, next) => {
   try {
-    const name = req.body.name;
-    const age = req.body.age;
-    const email = req.body.email;
-    const phone = req.body.phone;
-    const username = req.body.username;
-    const password = req.body.password;
-    const check = await User.findAll({ where: { name: name } });
+    const check = await User.findAll({ where: { name: req.body.name } });
     if (check.length === 0) {
       const user = await User.create({
-        name: name,
-        age: age,
-        email: email,
-        phone: phone,
-        username: username,
-        password: password,
+        name: req.body.name,
+        dob: req.body.dob,
+        age: req.body.age,
+        email: req.body.email,
+        phone: req.body.phone,
+        avata: req.body.avata,
+        username: req.body.username,
+        password: req.body.password
       });
       res.status(200).send({ user: user });
     } else {
@@ -44,22 +40,18 @@ exports.postNewUser = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   try {
-    const name = req.body.name;
-    const age = req.body.age;
-    const email = req.body.email;
-    const phone = req.body.phone;
-    const username = req.body.username;
-    const password = req.body.password;
     const user = await User.findByPk(req.params.id);
     const result = await user.update({
-      name: name,
-      age: age,
-      email: email,
-      phone: phone,
-      username: username,
-      password: password,
+      name: req.body.name,
+      dob: req.body.dob,
+      age: req.body.age,
+      email: req.body.email,
+      phone: req.body.phone,
+      avata: req.body.avata,
+      username: req.body.username,
+      password: req.body.password,
     });
-    res.status(401).send("Updated!");
+    res.status(200).send("Updated!");
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -69,14 +61,14 @@ exports.updateUser = async (req, res, next) => {
 };
 
 exports.deleteUser = async (req, res, next) => {
-    try {
-      const user = await User.findByPk(req.params.id);
-      const result = await user.destroy();
-      res.status(401).send("Deleted!");
-    } catch (err) {
-      if (!err.statusCode) {
-        err.statusCode = 500;
-      }
-      next(err);
+  try {
+    const user = await User.findByPk(req.params.id);
+    const result = await user.destroy();
+    res.status(200).send("Complete!");
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
     }
-  };
+    next(err);
+  }
+};
